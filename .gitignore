@@ -1,0 +1,13 @@
+# Ignore directories created for each docker service
+gitlab/
+grafana/
+jenkins/
+mariadb/
+minecraft/
+mosquitto/
+nginx/
+postgres/
+prometheus/
+
+composefile/*.yaml
+composefile/*.yml
