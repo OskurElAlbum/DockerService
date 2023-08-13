@@ -485,7 +485,6 @@ echo "Install Mosquitto"
 
 echo "1 - Create directories ${DIR}/mosquitto/{config,data,log}"
 mkdir -p $DIR/mosquitto/{config,data,log}
-chmod 777 -R $DIR/mosquitto/
 
 echo "2 - Copy the mosquitto config save"
 cp -rT $DIR/save/mosquitto/mosquitto_conf_backup $DIR/mosquitto/config
@@ -544,10 +543,10 @@ volumes:
       o: bind
       type: none
       device: ${DIR}/mosquitto/log
-" > $DIR/mosquitto/docker-compose-mosquitto.yml
+" > $DIR/composefile/docker-compose-mosquitto.yml
 
 echo "6 - Run mosquitto "
-docker-compose -f $DIR/mosquitto/docker-compose-mosquitto.yml up -d
+docker-compose -f $DIR/composefile/docker-compose-mosquitto.yml up -d
 
 echo "7 - Create a mosquitto username-password file
 put the file in the save directory for mosquitto
