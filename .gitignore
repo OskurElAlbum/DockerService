@@ -10,5 +10,9 @@ postgres/
 prometheus/
 web-application/
 
+#Ignore Docker compose file
 composefile/*.yaml
 composefile/*.yml
+
+#Ignore file that is need to be create by the user
+save/

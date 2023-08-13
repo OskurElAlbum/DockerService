@@ -681,8 +681,8 @@ mkdir -p $DIR/web-application/nginx/{config,log}
 # chmod 775 -R $DIR/nginx/
 
 echo "2 - Copy the nginx website and config save"
-cp -rT $DIR/save/nginx/nginx_www_backup $DIR/web-application/www #$DIR/nginx/www
-cp -rT $DIR/save/nginx/nginx_conf_backup $DIR/web-application/nginx/config #$DIR/nginx/config
+cp -rT $DIR/save/webapplication/webapp_www_backup $DIR/web-application/www
+cp -rT $DIR/save/webapplication/webapp_nginx_conf_backup $DIR/web-application/nginx/config
 
 echo "3 - Create Dockerfile for nginx"
 echo "FROM nginx:latest
