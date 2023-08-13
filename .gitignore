@@ -8,6 +8,7 @@ mosquitto/
 nginx/
 postgres/
 prometheus/
+web-application/
 
 composefile/*.yaml
 composefile/*.yml

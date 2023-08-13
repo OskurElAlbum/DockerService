@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-DIR="${HOME}/Docker/generator"
+# DIR="${HOME}/Docker/generator"
+DIR="${HOME}/Dockerservice"
 USER_SCRIPT=$USER
 
 # Fonctions ###########################################################
@@ -48,6 +49,9 @@ Options:
 
   -mine, --minecraft
     run minecraft container
+
+  -web, --webapplication
+    run a Webapplication services
 
   -sql, --SQLDatabase
     run a SQL database and a monitoring tool asociate
