@@ -1,0 +1,1 @@
+This is the directory where are located the save files use for each services in enter to function correctly
