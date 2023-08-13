@@ -610,8 +610,8 @@ mkdir -p $DIR/minecraft/{plugin,mode,world}
 echo "2 - Create volumes minecraftdata"
 docker volume create minecraftdata
 
-#echo "2.5 - Copy the minecraft save"
-#cp -rT $DIR/minecraftbackup $DIR/minecraft/world
+# echo "2.5 - Copy the minecraft save"
+# cp -rT $DIR/save/minecraft $DIR/minecraft/world
 
 echo "3 - Create docker compose for minecraft"
 echo "
@@ -629,7 +629,7 @@ services:
     environment:
       EULA: 'TRUE'
       TYPES: 'BUKKIT'
-      MAX_MEMORY: '2G'
+      MAX_MEMORY: '1G'
       OPS: 'JujuElNegrum,Berry_Stone'
       MOTD: \"C'EST LA PETITE MAISON DANS LA PRAIRIE\\\\C'EST FAUX, C'EST l'APOCALYPSE\"
       DIFFICULTY: 'normal'
@@ -658,10 +658,10 @@ volumes:
       type: none
       device: ${DIR}/minecraft/world
   rcon:
-" >$DIR/minecraft/docker-compose-minecraft.yml
+" >$DIR/composefile/docker-compose-minecraft.yml
 
 echo "4 - Run minecraft"
-docker-compose -f $DIR/minecraft/docker-compose-minecraft.yml up -d
+docker-compose -f $DIR/composefile/docker-compose-minecraft.yml up -d
 
 
 }

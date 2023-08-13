@@ -9,6 +9,7 @@ nginx/
 postgres/
 prometheus/
 web-application/
+SQL-Database/
 
 #Ignore Docker compose file
 composefile/*.yaml
