@@ -3,7 +3,7 @@
 Directory where are located the dockercompose file generate by the generator.sh file.
 
 ## this is an example of a docker compose file used to create a jenkins services
-''' dockercompose
+```dockerfile
 version: '3'
 services:
   jenkins:
@@ -23,4 +23,4 @@ volumes:
       o: bind
       type: none
       device: ${DIR}/jenkins/
-'''
+```
