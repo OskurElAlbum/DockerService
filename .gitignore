@@ -15,5 +15,8 @@ SQL-Database/
 composefile/*.yaml
 composefile/*.yml
 
-#Ignore file that is need to be create by the user
+#Ignore directory that is need to be used some container
 save/
+
+#Ignore directory used for security data
+datakeeper/*.env

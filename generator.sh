@@ -599,6 +599,8 @@ docker-compose -f $DIR/composefile/docker-compose-portainer.yml up -d
 
 }
 
+source datakeeper/minecraft.env
+
 minecraft() {
 
 echo
@@ -610,8 +612,8 @@ mkdir -p $DIR/minecraft/{plugin,mode,world}
 echo "2 - Create volumes minecraftdata"
 docker volume create minecraftdata
 
-# echo "2.5 - Copy the minecraft save"
-# cp -rT $DIR/save/minecraft $DIR/minecraft/world
+echo "2.5 - Copy the minecraft save"
+cp -rT $DIR/save/minecraft $DIR/minecraft/world
 
 echo "3 - Create docker compose for minecraft"
 echo "
@@ -625,31 +627,32 @@ services:
     - minecraftdata:/data
     - /home/minecraft/plugin:/plugins
     ports:
-      - "25565:25565"
+      - $MINECRAFT_PORT:25565
     environment:
       EULA: 'TRUE'
       TYPES: 'BUKKIT'
       MAX_MEMORY: '1G'
-      OPS: 'JujuElNegrum,Berry_Stone'
+      OPS: $OPS
       MOTD: \"C'EST LA PETITE MAISON DANS LA PRAIRIE\\\\C'EST FAUX, C'EST l'APOCALYPSE\"
       DIFFICULTY: 'normal'
       ICON: 'https://animotaku.fr/wp-content/uploads/2023/03/anime-Shingeki-no-Kyojin-Saison-Finale-partie-2-visuel-1.jpeg'
       ENABLES_WHITELIST: 'TRUE'
       ENFORCE_WHITELIST: 'TRUE'
       ENABLE_RCON: 'true'
-      RCON_PASSWORD: 'Max'
-      RCON_PORT: 28016
+      RCON_PASSWORD: $RCON_PASSWORD
+      RCON_PORT: $RCON_PORT
       #WORLD: https://www.minecraftmaps.com/survival-maps/cube-survival/download
     tty: true
     stdin_open: true
     restart: unless-stopped
-  rcon:
-    image: itzg/rcon
-    ports:
-      - "4326:4326"
-      - "4327:4327"
-    volumes:
-      - "rcon:/opt/rcon-web-admin/db"
+  # rcon:
+  #   image: itzg/rcon
+  #   ports:
+  #     - "4326:4326"
+  #     - "4327:4327"
+  #   volumes:
+  #     - "rcon:/opt/rcon-web-admin/db"
+
 volumes:
   minecraftdata:
     driver: local
@@ -665,6 +668,8 @@ docker-compose -f $DIR/composefile/docker-compose-minecraft.yml up -d
 
 
 }
+
+source datakeeper/Webapp.env
 
 Webapp() {
 
@@ -698,7 +703,6 @@ echo "FROM nginx:latest
 # RUN apt-get update && apt-get install -y libmemcached-dev libssl-dev zlib1g-dev \
 # 	&& pecl install memcached-3.2.0 \
 # 	&& docker-php-ext-enable memcached
-# EXPOSE 9000
 # CMD [\"php\", \"-S\", \"0.0.0.0:9000\"]
 # " >$DIR/web-application/Dockerfile/Dockerfile-php
 
@@ -714,7 +718,7 @@ services:
       dockerfile: Dockerfile-nginx
     container_name: webapplication-EngineX
     ports:
-      - 8000:80
+      - $NGINX_PORT:80
     volumes:
       - website:/usr/share/nginx/html
       - nginx_conf:/etc/nginx/conf.d
@@ -731,7 +735,7 @@ services:
     # stdin_open: true
     # tty: true
     ports:
-      - 9000:9000
+      - $PHP_PORT:9000
     networks:
      - generator
     volumes:
@@ -765,6 +769,8 @@ docker-compose -f $DIR/composefile/docker-compose-webapplication.yml up -d #$DIR
 
 }
 
+source datakeeper/SQLDatabase.env
+
 SQLDatabase(){
 echo
 echo "Install SQLDatabase"
@@ -783,12 +789,12 @@ services:
     volumes:
      - mariadb_data:/var/lib/mysql/
     environment:
-      MYSQL_ROOT_PASSWORD: marche
-      MYSQL_DATABASE: Webappdb
-      MYSQL_USER: Max
-      MYSQL_PASSWORD: Axium
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
     ports:
-    - 3306:3306
+    - $MARIADB_PORT:3306
     networks:
     - generator
 
@@ -797,7 +803,7 @@ services:
     restart: always
     container_name: SQLdatabase-phpmyadmin
     ports:
-      - 8090:80
+      - $PHPMYADMIN_PORT:80
     environment:
       - PMA_ARBITRARY=1
     networks:

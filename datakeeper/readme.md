@@ -1,0 +1,1 @@
+This is the directory where are located the security files that contain idendifiant to use each services
