@@ -1,19 +1,16 @@
 # Ignore everything inside the "save" directory
-save/*
-# Except the "example" directory
+save/
+# Except the "example" directory and readme.md
 !save/example/
 !save/readme.md
 
-# Ignore everything inside the "save" directory
-services/
-# Except the "example" directory
-!services/example/
+# Ignore everything inside the "services" directory
+services/*
+# Except the "example" directory and readme.md
+!services/example/*
 !services/readme.md
 
-# Ignore everything inside the "services_generator" directory
-services_generator/
-
-# Keep the .gitkeep itself
-!/*.gitkeep
+# Keep the .gitkeep itself everywhere, including subdirectories
+!**/.gitkeep
 
 restore.sh
