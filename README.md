@@ -15,6 +15,9 @@
 ## Need to be installed
 - IOT monittoring service
 
+## To setup
+- Backup setup
+
 ## Each directory has the following goal:
 **services** : Directory where are located all file used by each services
 **services_generator** : Directory where are located the shell script use to build each services   

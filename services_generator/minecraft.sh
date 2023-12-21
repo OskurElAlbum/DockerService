@@ -10,13 +10,13 @@ echo "1 - Create directories ${DIR_MINECRAFT}/{plugin,mode,world}"
 mkdir -p $DIR_MINECRAFT/{plugin,mode,world}
 
 echo "2 - Copy the environment variable and the saved file"
-cp -rT $DIR/save/minecraft $DIR_MINECRAFT
+cp $DIR/save/minecraft/.env $DIR_MINECRAFT
 
 echo "3 - Create volumes minecraftdata"
 docker volume create minecraftdata
 
 echo "3.5 - Copy the minecraft save"
-cp -rT $DIR/save/minecraft $DIR_MINECRAFT/world
+cp -rT $DIR/save/minecraft/Minecraft_World_Save $DIR_MINECRAFT/world
 
 echo "4 - Create docker compose for minecraft"
 echo "
