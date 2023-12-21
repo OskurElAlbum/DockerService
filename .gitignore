@@ -1,22 +1,19 @@
-# Ignore directories created for each docker service
-gitlab/
-grafana/
-jenkins/
-mariadb/
-minecraft/
-mosquitto/
-nginx/
-postgres/
-prometheus/
-web-application/
-SQL-Database/
+# Ignore everything inside the "save" directory
+save/*
+# Except the "example" directory
+!save/example/
+!save/readme.md
 
-#Ignore Docker compose file
-composefile/*.yaml
-composefile/*.yml
+# Ignore everything inside the "save" directory
+services/
+# Except the "example" directory
+!services/example/
+!services/readme.md
 
-#Ignore directory that is need to be used some container
-save/
+# Ignore everything inside the "services_generator" directory
+services_generator/
 
-#Ignore directory used for security data
-datakeeper/*.env
+# Keep the .gitkeep itself
+!/*.gitkeep
+
+restore.sh

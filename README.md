@@ -1,15 +1,34 @@
 # This is multiservice docker creator
 
 ## Currently work to install:
-- container monitoring server
-- Web server
-- MQTT server
+- container monitoring service
+- Web application service
+- IOT monittoring service
+- SQL Database and monitoring service
 - Minecraft server
-- SQL Database server
+- MQTT server
+- Grafana server
+- CCTV server
 
 ## Each directory has the following goal:
-**composefile** : Directory where are located the docker compose file of each services  
-**save** : Directory where are located file used by each services to work correctly 
-e.g. the file used by your website  
-**datakeeper** : Directory where are located file used for identification on each services  
+**services** : Directory where are located each services  
+**save** : Directory where are located the configuration and fonctionnal file of each services (To be added by the user) 
+e.g. the file used by your website    
 **backup** : Directory where are located file recover for each services  
+
+# How to use the project
+To use this projet, execute in first the **installation.sh** file, who download on your machine docker and docker compose.
+
+The permission right must maybe modified to execute shell file, if it is needed use the command:
+```chmod 755 filetomodifie.sh```
+
+## network_creator.sh
+This file allow you to create some docker network, to create one, you need to you the following syntax :
+```./network_creator.sh network_to_be_created```
+
+## generator.sh
+This file allow you to generate different service containerize with docker, to create one of them, , you need to you the following syntax :
+```./generator.sh -service_to_be_created```
+
+To know what is the command to use each services, you can refer to help using the command : 
+```./generator.sh -h```

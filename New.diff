@@ -1,0 +1,51 @@
+diff --git a/composefile/readme.md b/composefile/readme.md
+index a81c238..73ec99d 100644
+--- a/composefile/readme.md
++++ b/composefile/readme.md
+@@ -3,7 +3,7 @@
+ Directory where are located the dockercompose file generate by the generator.sh file.
+ 
+ ## this is an example of a docker compose file used to create a jenkins services
+-''' dockercompose
++```dockerfile
+ version: '3'
+ services:
+   jenkins:
+@@ -23,4 +23,4 @@ volumes:
+       o: bind
+       type: none
+       device: ${DIR}/jenkins/
+-'''
+\ No newline at end of file
++```
+\ No newline at end of file
+diff --git a/datakeeper/readme.md b/datakeeper/readme.md
+index c902ca0..f7962e2 100644
+--- a/datakeeper/readme.md
++++ b/datakeeper/readme.md
+@@ -1 +1,11 @@
+-This is the directory where are located the security files that contain idendifiant to use each services
+\ No newline at end of file
++# This is the directory where are located the security files that contain idendifiant to use each services
++
++Directory where are located file that store sensible data like id and password
++
++## this is an example of a configuration file used to create a SQL database with a .env file
++```.env
++MYSQL_ROOT_PASSWORD=my_root_password
++MYSQL_DATABASE=my_database
++MYSQL_USER=my_user
++MYSQL_PASSWORD=my_password
++```
+\ No newline at end of file
+diff --git a/save/readme.md b/save/readme.md
+index 07f5e0d..8414b64 100644
+--- a/save/readme.md
++++ b/save/readme.md
+@@ -1 +1,3 @@
+-This is the directory where are located the save files use for each services in enter to function correctly
+\ No newline at end of file
++# This is the directory where are located the save files use for each services in enter to function correctly
++
++Directory where are located file need for a services added by the user
+\ No newline at end of file
