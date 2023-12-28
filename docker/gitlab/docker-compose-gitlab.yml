@@ -1,0 +1,46 @@
+
+version: '3.0'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    env_file: .env
+    ports:
+    - "${GITLAB_PORT}:80"
+  #  - "${GITLAB_PORT2}:443"
+    - "${GITLAB_PORT3}:5000"
+    volumes:
+     - gitlab_config:/etc/gitlab/
+     - gitlab_logs:/var/log/gitlab/
+     - gitlab_data:/var/opt/gitlab/
+  #   networks:
+  #   - gitlab_networks
+  #   hostname: 'gitlab.example.com'
+  #   environment:
+  #     GITLAB_OMNIBUS_CONFIG: |
+  #       external_url 'https://gitlab.example.com'
+  #   expose:
+  #   - 5000
+
+volumes:
+  gitlab_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/gitlab/data
+  gitlab_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/gitlab/logs
+  gitlab_config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/gitlab/config
+

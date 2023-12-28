@@ -1,0 +1,36 @@
+
+version: '3.8'
+
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: minecraft_itgz
+    restart: always
+    env_file: .env
+    ports:
+      - "${MINECRAFT_PORT}:25565"
+    volumes:
+    - minecraftdata:/data
+    environment:
+      EULA: 'TRUE'
+      MAX_MEMORY: '1G'
+      OPS: $MINECRAFT_OPS
+      MOTD: "$MINECRAFT_PRESENTATION"
+      DIFFICULTY: 'normal'
+      ICON: '$MINECRAFT_IMAGE'
+      ENABLES_WHITELIST: 'true'
+      ENABLE_RCON: 'true'
+      RCON_PASSWORD: $MINECRAFT_RCON_PORT
+      RCON_PORT: $MINECRAFT_RCON_PASSWORD
+    tty: true
+    stdin_open: true
+
+volumes:
+  minecraftdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/minecraft/world
+
+

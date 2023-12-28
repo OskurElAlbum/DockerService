@@ -7,16 +7,12 @@
 - Web application service
 - CCTV server
 
-## Need to be updated
-- Graphana server
-- Mosquitto server
-- Jenkins server
-
 ## Need to be installed
 - IOT monittoring service
 
 ## To setup
 - Backup setup
+- Retrieving save directory files from a remote repository 
 
 ## Each directory has the following goal:
 **services** : Directory where are located all file used by each services

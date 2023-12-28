@@ -1,0 +1,122 @@
+
+version: '3.0'
+
+services:
+  Iot_Monitoring_Mosquitto:
+    image: eclipse-mosquitto:openssl
+    container_name: Iot_Monitoring_Mosquitto
+    restart: always
+    env_file: .env
+    ports:
+    - "${MOSQUITTO_PORT}:1883"
+    - "${MOSQUITTO_WEBSOCKET_PORT}:9001"
+    volumes:
+     - Iot_Monitoring_Mosquitto_Conf:/mosquitto/config
+     - Iot_Monitoring_Mosquitto_Data:/mosquitto/data:ro
+     - Iot_Monitoring_Mosquitto_Log:/mosquitto/log
+    networks:
+    - Iot_Monitoring_network
+
+  iot_monitoring_python:
+#    image: python:3.9
+    container_name: iot_monitoring_python
+#    restart: always
+    build:
+      context: ./python/file/
+    volumes:
+      - Iot_Monitoring_Python_File:/app
+    environment:
+      MQTT_BROKER: Iot_Monitoring_Mosquitto
+      MQTT_PORT: 1883
+      DB_HOST: Iot_Monitoring_Mariadb
+      DB_DATABASE: "$MYSQL_DATABASE"
+      DB_USER: "$MYSQL_USER"
+      DB_PASSWORD: "$MYSQL_PASSWORD"
+    networks:
+      - Iot_Monitoring_network
+
+  Iot_Monitoring_Mariadb:
+    image: mariadb:latest
+    container_name: Iot_Monitoring_Mariadb
+    restart: always
+    env_file: .env
+    ports:
+    - "${MARIADB_PORT}:3306"
+    volumes:
+     - Iot_Monitoring_Mariadb_Data:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: "$MYSQL_ROOT_PASSWORD"
+      MYSQL_DATABASE: "$MYSQL_DATABASE"
+      MYSQL_USER: "$MYSQL_USER"
+      MYSQL_PASSWORD: "$MYSQL_PASSWORD"
+    networks:
+    - Iot_Monitoring_network
+
+  Iot_Monitoring_Grafana:
+    image: grafana/grafana:latest
+    container_name: Iot_Monitoring_Grafana
+    restart: always
+    env_file: .env
+    ports:
+    - "${GRAFANA_PORT}:3000"
+    volumes:
+      - Iot_Monitoring_Grafana_Data:/var/lib/grafana/
+      - Iot_Monitoring_Grafana_Etc:/etc/grafana/provisioning/
+    user: 0:0
+    networks:
+      - Iot_Monitoring_network
+
+volumes:
+  Iot_Monitoring_Mosquitto_Conf:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/iot_Monitoring/mosquitto/config
+  Iot_Monitoring_Mosquitto_Data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/iot_Monitoring/mosquitto/data
+  Iot_Monitoring_Mosquitto_Log:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/iot_Monitoring/mosquitto/log
+
+  Iot_Monitoring_Python_File:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /home/max/Documents/Docker/Dockerservice/services/iot_Monitoring/python/file
+
+  Iot_Monitoring_Mariadb_Data:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /home/max/Documents/Docker/Dockerservice/services/iot_Monitoring/mariadb/data
+
+  Iot_Monitoring_Grafana_Etc:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/iot_Monitoring/grafana/etc/
+  Iot_Monitoring_Grafana_Data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/max/Documents/Docker/Dockerservice/services/iot_Monitoring/grafana/data/
+
+networks:
+  Iot_Monitoring_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.170.0/24
+

@@ -36,6 +36,18 @@ Options:
 
   -web, --webapplication
     run a Webapplication services
+
+  -iot, --IotMonitoring
+      run a Iot monitoring services
+
+  -j, --jenkins
+      run jenkins container
+
+  -g, --gitlab
+    run gitlab container
+
+  -php, --phpMyAdmin
+    run phpMyAdmin container
   "
 }
 
@@ -66,6 +78,18 @@ parse_options() {
     -web|--webapplication)
       Webapp
       ;;
+    -iot|--IotMonitoring)
+      IotMonitoring
+      ;;
+    -j|--jenkins)
+      jenkins
+      ;;
+    -g|--gitlab)
+      gitlab
+      ;;
+    -php|--phpMyAdmin)
+      phpMyAdmin
+      ;;
     *)
       echo "Unknown option: ${opt} - Run ${0##*/} -h for help.">&2
       exit 1
@@ -78,33 +102,53 @@ for i in $(docker ps -q); do docker inspect -f "{{range .NetworkSettings.Network
 }
 
 api() {
-docker run -d --name httpbin -p 9999:80 kennethreitz/httpbin
-firefox -p test 127.0.0.1:9999 &
+  docker run -d --name httpbin -p 9999:80 kennethreitz/httpbin
+  firefox -p test 127.0.0.1:9999 &
 }
 
 portainer(){
-echo "Install Portainer"
-source $DIR/services_generator/portainer.sh
+  echo "Install Portainer"
+  source $DIR/services_generator/portainer.sh
 }
 
 minecraft() {
-echo "Install Minecraft"
-source $DIR/services_generator/minecraft.sh
+  echo "Install Minecraft"
+  source $DIR/services_generator/minecraft.sh
 }
 
 CCTV(){
-echo "Install ZoneMinder"
-source $DIR/services_generator/zoneminder.sh
+  echo "Install ZoneMinder"
+  source $DIR/services_generator/zoneminder.sh
 }
 
 SQLDatabase(){
-echo "Install SQLDatabase"
-source $DIR/services_generator/SQL_Database.sh
+  echo "Install SQLDatabase"
+  source $DIR/services_generator/SQL_Database.sh
 }
 
 Webapp() {
-echo "Install Webapplication"
-source $DIR/services_generator/web_Application.sh
+  echo "Install Webapplication"
+  source $DIR/services_generator/web_Application.sh
+}
+
+IotMonitoring() {
+  echo "Install Iot monitoring service"
+  source "${DIR}"/services_generator/iot_Monitoring.sh
+}
+
+jenkins() {
+  echo "Install Jenkins Server"
+  source "${DIR}"/services_generator/jenkins.sh
+}
+
+gitlab() {
+  echo "Install gitlab Server"
+  source "${DIR}"/services_generator/gitlab.sh
+}
+
+phpMyAdmin() {
+  echo "Install phpmyadmin Server"
+  source "${DIR}"/services_generator/phpmyadmin.sh
 }
 
 # Let's Go !! parse args  ####################################################################
